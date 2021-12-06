@@ -23,28 +23,7 @@
 </head>
 
 <body>
-
-    @auth
-        @include('navbars.sidebar')
-
-        <div class="wrapper d-flex flex-column min-vh-100 bg-light w-auto" style="padding-left: 4rem;">
-            @include('navbars.header')
-
-            <div class="body flex-grow-1 px-3">
-                <div class="container-lg">
-                    @yield('content')
-                </div>
-            </div>
-
-            <footer class="footer">
-                <div class="ms-auto">
-                    Powered by&nbsp;<a href="https://coreui.io/bootstrap/ui-components/">CoreUI UI Components</a>
-                </div>
-            </footer>
-        </div>
-    @else
-        @yield('content')
-    @endauth
+    @yield('content')
 
     <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@4.1.0/dist/js/coreui.bundle.min.js" crossorigin="anonymous">
     </script>
