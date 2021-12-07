@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumb')
-    @include('partials.breadcrumb', ['title' => 'Account', 'subtitle' => 'Lock account'])
+    @include('partials.breadcrumb', ['links' => ['Account', 'Lock account']])
 @endsection
 
 @section('content')
