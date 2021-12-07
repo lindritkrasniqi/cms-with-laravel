@@ -4,8 +4,13 @@ namespace App\Repositories;
 
 use App\Models\User;
 
-class Users
+class UsersRepository
 {
+
+    public function all()
+    {
+        return User::where('id', '!=', auth()->id())->get();
+    }
 
     /**
      * Update user or Create new one
