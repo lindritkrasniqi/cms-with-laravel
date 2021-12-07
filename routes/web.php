@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +35,31 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('/lock-account', 'auth.account-lock')->name('account');
         Route::view('/sttings', 'auth.settings')->name('settings');
         Route::post('/lock-account', [App\Http\Controllers\HomeController::class, 'lock'])->name('account.lock');
+
+
+        Route::group([
+            'prefix' => 'menage',
+            'as' => 'menage.'
+        ], function () {
+
+            Route::resource('users', UserController::class)->names([
+                'index' => 'users',
+                'store' => 'users.store',
+                'show' => 'users.show',
+                'edit' => 'users.edit',
+                'update' => 'users.update',
+                'destroy' => 'users.destroy',
+                'create' => 'users.create'
+            ]);
+            Route::put('users/{user}/change-password', [UserController::class, 'changePassword'])->name('users.change-password');
+            Route::resource('roles', RoleController::class)->names([
+                'index' => 'roles',
+                'store' => 'roles.store',
+                'show' => 'roles.show',
+                'edit' => 'roles.edit',
+                'update' => 'roles.update',
+                'destroy' => 'roles.destroy',
+            ])->except('create');
+        });
     });
 });

@@ -53,16 +53,49 @@
                             </li>
 
                             <li class="nav-title">Menage</li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="colors.html">
-                                    <i class="nav-icon fa fa-users"></i> Users
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="typography.html">
-                                    <i class="nav-icon fa fa-shield"></i> Roles
-                                </a>
-                            </li>
+
+                            @can('viewAny', \App\Models\User::class)
+                                <li class="nav-group" aria-expanded="true">
+                                    <a class="nav-link nav-group-toggle" href="#">
+                                        <i class="nav-icon fa fa-users"></i> Users
+                                    </a>
+                                    <ul class="nav-group-items" style="height: 0px;">
+
+                                        @can('create', \App\Models\User::class)
+                                            <li class="nav-item">
+                                                <a @class([
+                                                    'nav-link',
+                                                    'active' => Route::is('menage.users.create'),
+                                                ]) href="{{ route('menage.users.create') }}">
+                                                    <i class="nav-icon fa fa-plus"></i> Create
+                                                </a>
+                                            </li>
+                                        @endcan
+
+                                        <li class="nav-item">
+                                            <a @class([
+                                                'nav-link',
+                                                'active' => Route::is('menage.users'),
+                                            ]) href="{{ route('menage.users') }}">
+                                                <i class="nav-icon fa fa-reorder"></i> Show
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endcan
+
+
+                            @can('viewAny', \App\Models\Role::class)
+                                <li class="nav-item">
+                                    <a @class([
+                                        'nav-link',
+                                        'active' => Route::is('menage.roles'),
+                                    ]) href="{{ route('menage.roles') }}">
+                                        <i class="nav-icon fa fa-shield"></i> Roles
+                                    </a>
+                                </li>
+                            @endcan
+
                         </div>
                     </div>
                 </div>
