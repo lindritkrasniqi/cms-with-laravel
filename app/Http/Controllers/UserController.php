@@ -136,4 +136,31 @@ class UserController extends Controller
 
         return redirect()->route('menage.users')->with(['message' => 'Success']);
     }
+
+    public function trashed()
+    {
+        $this->authorize('viewTrashed', User::class);
+
+        $users = UsersRepository::trashed();
+
+        return view('trashed.users', compact('users'));
+    }
+
+    public function restore(User $user)
+    {
+        $this->authorize('restore', $user);
+
+        $user->restore();
+
+        return redirect()->route('menage.users.trashed')->with(['message' => 'success']);
+    }
+
+    public function delete(User $user)
+    {
+        $this->authorize('forceDelete', $user);
+
+        $user->forceDelete();
+
+        return redirect()->route('menage.users.trashed')->with(['message' => 'success']);
+    }
 }
