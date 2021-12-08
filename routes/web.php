@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LockAccountController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ Route::get('/', function () {
 Auth::routes();
 
 /**
- * Group of routes under auth middleware
+ * Group of routes under "auth" middleware
  */
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/email/verify', [App\Http\Controllers\Auth\VerificationController::class, 'show'])->name('verification.notice');
@@ -33,16 +34,27 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/email/resend/verification-notification', [App\Http\Controllers\Auth\VerificationController::class, 'resend'])->middleware(['throttle:6,1'])->name('verification.resend');
 
     /**
-     * Group of routes under verified middleware
+     * Group of routes under "verified" middleware
      */
     Route::group(['middleware' => 'verified'], function () {
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-        Route::get('/profile', [App\Http\Controllers\HomeController::class, 'show'])->name('profile');
-        Route::put('/profile', [App\Http\Controllers\HomeController::class, 'update'])->name('profile.update');
+        Route::view('/home', 'home')->name('home');
+
+        /**
+         * Profile endpoints
+         */
+        Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+        /**
+         * Settings endpoints
+         */
         Route::view('/settings', 'auth.settings')->name('settings');
+
+        /**
+         * Lock account endpoints
+         */
         Route::view('/lock-account', 'auth.lock')->name('lock');
         Route::delete('/lock-account', LockAccountController::class)->name('account.lock');
-
 
         /**
          * Group of routes under prefix "menage" named as 'menage.*'
@@ -51,7 +63,6 @@ Route::group(['middleware' => ['auth']], function () {
             'prefix' => 'menage',
             'as' => 'menage.'
         ], function () {
-
 
             /** 
              * Users routes
