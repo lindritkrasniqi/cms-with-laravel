@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        User::create($request->validated());
+        User::create(array_merge($request->validated(), ['password' => bcrypt($request->validated()['password'])]));
 
         return back()->with(['message' => 'success']);
     }
