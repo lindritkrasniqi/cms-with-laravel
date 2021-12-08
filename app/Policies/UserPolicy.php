@@ -22,6 +22,17 @@ class UserPolicy
     }
 
     /**
+     * Determine whether the user can see soft deleted models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewTrashed(User $user)
+    {
+        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]);
+    }
+
+    /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
