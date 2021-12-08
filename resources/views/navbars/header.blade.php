@@ -78,8 +78,8 @@
                     <div class="dropdown-divider"></div>
                     <a @class([
                         'dropdown-item',
-                        'active' => Route::is('account'),
-                    ]) href="{{ route('account') }}">
+                        'active' => Route::is('lock'),
+                    ]) href="{{ route('lock') }}">
                         <i class="icon me-2 fa fa-lock"></i> Lock Account
                     </a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
