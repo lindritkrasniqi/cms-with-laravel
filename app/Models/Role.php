@@ -15,11 +15,15 @@ class Role extends Model
     ];
 
     public const ADMINISTRATOR = 1;
-    public const MENAGER = 2;
-    public const USER = 3;
+    public const USER = 2;
 
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function premissions()
+    {
+        return $this->hasMany(Premission::class);
     }
 }
