@@ -7,12 +7,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersRepository
 {
-
+    /**
+     * Return all records.
+     *
+     * @return \App\Models\User
+     */
     public function all()
     {
         return User::where('id', '!=', auth()->id())->get();
     }
 
+    /**
+     * Retrun soft deleted records.
+     *
+     * @return \App\Models\User
+     */
     public function trashed()
     {
         return User::onlyTrashed()->get();
