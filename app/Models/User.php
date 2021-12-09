@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Facades\Services\Policies;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,8 +45,28 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dispatchesEvents = [
+        'created' => Registered::class
+    ];
+
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Check if the current user are able to take any action upon given policy
+     *
+     * @param  string  $action
+     * @param  string  $policy
+     * @return boolean
+     */
+    public function ableTo(string $action, string $policy): bool
+    {
+        if (Policies::exists($policy) && Policies::hasRightOn($policy)) {
+            return Policies::policy($policy)->{$action};
+        }
+
+        return false;
     }
 }
