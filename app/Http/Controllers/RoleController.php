@@ -29,9 +29,9 @@ class RoleController extends Controller
     {
         $this->authorize('create', Role::class);
 
-        Role::create($request->validated());
+        $role = Role::create($request->validated());
 
-        return back()->with(['message' => 'Successfully created new role']);
+        return redirect()->route('menage.roles.edit', $role->id)->with(['message' => 'Successfully created new role']);
     }
 
     /**
