@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LockAccountController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\PremissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -82,7 +83,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('users/{user}/delete', [UserController::class, 'delete'])->withTrashed()->name('users.delete');
 
             /**
-             * Roles routes
+             * Roles/Premissions routes
              */
             Route::resource('roles', RoleController::class)->names([
                 'index' => 'roles',
@@ -92,6 +93,9 @@ Route::group(['middleware' => ['auth']], function () {
                 'update' => 'roles.update',
                 'destroy' => 'roles.destroy',
             ])->except('create');
+            Route::post('roles/{role}/premissions', [PremissionController::class, 'store'])->name('premissions.store');
+            Route::put('premissions/{premission}', [PremissionController::class, 'update'])->name('premissions.update');
+            Route::delete('premissions/{premission}', [PremissionController::class, 'destroy'])->name('premissions.destroy');
         });
     });
 });
