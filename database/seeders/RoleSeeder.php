@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Facades\Services\Policies;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -15,18 +15,55 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert($this->roles());
+        $this->registerAdministrator();
+        $this->registerUser();
     }
 
-
-    private function roles()
+    /**
+     * Register administrator role with default policies
+     *
+     * @return void
+     */
+    private function registerAdministrator()
     {
-        $now = now()->toDateTimeString();
+        $administrator = Role::create([
+            'id' => Role::ADMINISTRATOR,
+            'role' => 'administrator'
+        ]);
 
-        return [
-            ['id' => Role::ADMINISTRATOR, 'role' => 'administrator', 'created_at' => $now, 'updated_at' => $now],
-            ['id' => Role::MENAGER, 'role' => 'menager', 'created_at' => $now, 'updated_at' => $now],
-            ['id' => Role::USER, 'role' => 'user', 'created_at' => $now, 'updated_at' => $now]
-        ];
+        foreach (Policies::all() as $key => $value) {
+            $administrator->premission()
+                ->create([
+                    'policy' => $key,
+                    'view_any' => true,
+                    'view_trashed' => true,
+                    'view' => true,
+                    'create' => true,
+                    'update' => true,
+                    'delete' => true,
+                    'restore' => true,
+                    'force_delete' => true,
+                ]);
+        }
+    }
+
+    /**
+     * Register user role with default policies
+     *
+     * @return void
+     */
+    private function registerUser()
+    {
+        if (Policies::exists('UserPolicy')) {
+            Role::create([
+                'id' => Role::USER,
+                'role' => 'user'
+            ])->premission()->create([
+                'policy' => 'UserPolicy',
+                'view_any' => true,
+                'view_trashed' => true,
+                'view' => true,
+            ]);
+        }
     }
 }
