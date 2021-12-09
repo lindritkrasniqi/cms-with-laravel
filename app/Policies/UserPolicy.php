@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -18,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]);
+        return $user->ableTo('view_any', class_basename($this));
     }
 
     /**
@@ -29,7 +28,7 @@ class UserPolicy
      */
     public function viewTrashed(User $user)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]);
+        return $user->ableTo('view_trashed', class_basename($this));
     }
 
     /**
@@ -41,7 +40,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]) || $user->id === $model->id;
+        return $user->ableTo('view', class_basename($this));
     }
 
     /**
@@ -52,7 +51,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]);
+        return $user->ableTo('create', class_basename($this));
     }
 
     /**
@@ -64,7 +63,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]) || $user->id === $model->id;
+        return $user->ableTo('update', class_basename($this));
     }
 
     /**
@@ -76,7 +75,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]) || $user->id === $model->id;
+        return $user->ableTo('delete', class_basename($this));
     }
 
     /**
@@ -88,7 +87,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]) || $user->id === $model->id;
+        return $user->ableTo('restore', class_basename($this));
     }
 
     /**
@@ -100,6 +99,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER]) || $user->id === $model->id;
+        return $user->ableTo('force_delete', class_basename($this));
     }
 }
