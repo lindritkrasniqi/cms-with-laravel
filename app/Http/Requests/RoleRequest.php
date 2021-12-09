@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Role;
+use App\Rules\BoolenRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -15,7 +16,7 @@ class RoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->role_id === Role::ADMINISTRATOR;
+        return true;
     }
 
     /**
