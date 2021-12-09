@@ -260,7 +260,7 @@
                                         </th>
                                         <th>User</th>
                                         <th class="text-center">Country</th>
-                                        <th>Usage</th>
+                                        <th>Email</th>
                                         <th class="text-center">Payment Method</th>
                                         <th>Activity</th>
                                         <th></th>
@@ -280,36 +280,23 @@
                                             </td>
                                             <td>
                                                 <div>{{ $user->name }}</div>
-                                                <div class="small text-medium-emphasis"><span>New</span> | Registered:
-                                                    {{ $user->created_at->diffForHumans() }}
+                                                <div class="small text-medium-emphasis">
+                                                    Registered: {{ $user->created_at->diffForHumans() }}
                                                 </div>
                                             </td>
                                             <td class="text-center">
                                                 <span class="fw-lighter" title="Kosovo">XK</span>
                                             </td>
                                             <td>
-                                                <div class="clearfix">
-                                                    <div class="float-start">
-                                                        <div class="fw-semibold">50%</div>
-                                                    </div>
-                                                    <div class="float-end">
-                                                        <small class="text-medium-emphasis">Jun 11, 2020 - Jul 10,
-                                                            2020</small>
-                                                    </div>
-                                                </div>
-                                                <div class="progress progress-thin">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
-                                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                                    </div>
-                                                </div>
+                                                <span class="fw-lighter" title="{{ $user->email }}">{{ $user->email }}</span>
                                             </td>
                                             <td class="text-center">
                                                 <i class="icon fa fa-credit-card"></i>
                                                 <i class="icon fa fa-credit-card-alt"></i>
                                             </td>
                                             <td>
-                                                <div class="small text-medium-emphasis">Last login</div>
-                                                <div class="fw-semibold">10 sec ago</div>
+                                                <div class="small text-medium-emphasis">Last update</div>
+                                                <div class="fw-semibold">{{ $user->updated_at->diffForHumans() }}</div>
                                             </td>
                                             <td>
                                                 <div class="dropdown">

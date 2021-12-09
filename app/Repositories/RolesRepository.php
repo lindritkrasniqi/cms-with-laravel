@@ -7,36 +7,27 @@ use App\Models\Role;
 class RolesRepository
 {
     /**
-     * Get all roles
+     * Undocumented variable
      *
-     * @return void
+     * @var [type]
      */
-    public function all()
+    private $roles;
+
+    /**
+     * Undocumented function
+     */
+    public function __construct()
     {
-        return Role::with('users')->withCount('users')->get();
+        $this->roles = Role::withCount('users')->get();
     }
 
     /**
-     * Update existing role or Create new one
+     * Return all roles with premissions
      *
-     * @param  array $data
-     * @return void
+     * @return $roles
      */
-    public function save(array $data)
+    public function roles()
     {
-        return Role::updateOrCreate(['id' => $data['id']], [
-            'role' => $data['role']
-        ]);
-    }
-
-    /**
-     * Delete role by id
-     *
-     * @param  integer $id
-     * @return void
-     */
-    public function delete(int $id)
-    {
-        return Role::destroy($id);
+        return $this->roles ?? [];
     }
 }

@@ -3,13 +3,28 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UsersRepository
 {
-
+    /**
+     * Return all records.
+     *
+     * @return \App\Models\User
+     */
     public function all()
     {
         return User::where('id', '!=', auth()->id())->get();
+    }
+
+    /**
+     * Retrun soft deleted records.
+     *
+     * @return \App\Models\User
+     */
+    public function trashed()
+    {
+        return User::onlyTrashed()->get();
     }
 
     /**
@@ -34,5 +49,46 @@ class UsersRepository
     public function delete(int $id)
     {
         return User::destroy($id);
+    }
+
+    /**
+     * Find locked account
+     *
+     * @param  string $username
+     * @return \App\Models\User
+     */
+    public function findLockedAccount(string $key, string $value)
+    {
+        return User::where($key, $value)->onlyTrashed()->first();
+    }
+
+    /**
+     * Unclok account
+     *
+     * @return void
+     */
+    public function unlockAccountWhenIsLocked($findBy, $credentials)
+    {
+        $user = $this->findLockedAccount($findBy, $credentials[$findBy]);
+
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            $user->restore();
+        }
+    }
+
+    /**
+     * Lock current authenticated account
+     *
+     * @return void
+     */
+    public function lockAccount(): void
+    {
+        auth()->user()->delete();
+
+        auth()->logout();
+
+        request()->session()->invalidate();
+
+        request()->session()->regenerateToken();
     }
 }

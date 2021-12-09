@@ -18,7 +18,7 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER, Role::USER]);
+        return $user->ableTo('view_any', class_basename($this));
     }
 
     /**
@@ -30,7 +30,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR, Role::MENAGER, Role::USER]);
+        return $user->ableTo('view', class_basename($this));
     }
 
     /**
@@ -41,7 +41,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR]);
+        return $user->ableTo('create', class_basename($this));
     }
 
     /**
@@ -53,7 +53,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        return in_array($user->role_id, [Role::ADMINISTRATOR]);
+        return $user->ableTo('update', class_basename($this));
     }
 
     /**
@@ -65,6 +65,6 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        return $user->role_id === Role::ADMINISTRATOR && !in_array($role->id, [Role::ADMINISTRATOR, Role::MENAGER, Role::USER]);
+        return $user->ableTo('delete', class_basename($this)) && !in_array($role->id, [Role::ADMINISTRATOR, Role::USER]);
     }
 }

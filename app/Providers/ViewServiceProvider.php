@@ -3,10 +3,11 @@
 namespace App\Providers;
 
 use App\Facades\Repositories\RolesRepository;
+use App\Facades\Services\Policies;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
-class ViewSeviceProvider extends ServiceProvider
+class ViewServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -26,7 +27,11 @@ class ViewSeviceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('partials.roles.*', function ($view) {
-            return $view->with(['roles' => RolesRepository::all()]);
+            return $view->with(['roles' => RolesRepository::roles()]);
+        });
+
+        View::composer('partials.policies', function ($view) {
+            return $view->with(['policies' => Policies::all()]);
         });
     }
 }
