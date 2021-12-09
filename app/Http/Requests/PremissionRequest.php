@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Role;
-use App\Rules\BoolenRule;
+use App\Rules\PolicyRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class RoleRequest extends FormRequest
+class PremissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +26,15 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'role' => ['required', 'string', Rule::unique('roles')->ignore($this->route()->role)]
+            'policy' => ['required', 'string', new PolicyRule],
+            'view_any' => ['boolean'],
+            'view_trashed' => ['boolean'],
+            'view' => ['boolean'],
+            'create' => ['boolean'],
+            'update' => ['boolean'],
+            'delete' => ['boolean'],
+            'restore' => ['boolean'],
+            'force_delete' => ['boolean'],
         ];
     }
 }

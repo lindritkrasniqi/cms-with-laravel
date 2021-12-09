@@ -80,6 +80,17 @@
                                                 <i class="nav-icon fa fa-reorder"></i> Show
                                             </a>
                                         </li>
+
+                                        @can('viewTrashed', \App\Models\User::class)
+                                            <li class="nav-item">
+                                                <a @class([
+                                                    'nav-link',
+                                                    'active' => Route::is('menage.users.trashed'),
+                                                ]) href="{{ route('menage.users.trashed') }}">
+                                                    <i class="nav-icon fa fa-trash"></i> Trashed
+                                                </a>
+                                            </li>
+                                        @endcan
                                     </ul>
                                 </li>
                             @endcan
