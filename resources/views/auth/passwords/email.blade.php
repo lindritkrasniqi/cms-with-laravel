@@ -25,12 +25,6 @@
                                     @enderror
                                 </div>
 
-                                @if (session('status'))
-                                    <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
-                                    </div>
-                                @endif
-
                                 <button class="btn btn-block btn-primary" type="submit">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
