@@ -98,6 +98,10 @@ class UsersRepository
             return back();
         }
 
-        return back()->with(['message' => 'To lock your account you must be a regular user.']);
+        return back()->with([
+            'message' => 'To lock your account you must be a regular user.',
+            'type' => 'danger',
+            'delay' => 10000
+        ]);
     }
 }
