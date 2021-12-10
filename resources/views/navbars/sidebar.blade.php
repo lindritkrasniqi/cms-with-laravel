@@ -87,7 +87,7 @@
                                                     'nav-link',
                                                     'active' => Route::is('menage.users.trashed'),
                                                 ]) href="{{ route('menage.users.trashed') }}">
-                                                    <i class="nav-icon fa fa-trash"></i> Trashed
+                                                    <i class="nav-icon fa fa-lock"></i> Closed accounts
                                                 </a>
                                             </li>
                                         @endcan
