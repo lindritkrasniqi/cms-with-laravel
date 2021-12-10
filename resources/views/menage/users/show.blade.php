@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="row mt-2">
-                        <div class="col-md-5 fw-lighter text-end">{{ __('Role') }}:</div>
+                        <div class="col-md-5 fw-lighter text-end">Role:</div>
                         <div class="col-md-7 fw-medium text-capitalize">{{ $user->role->role }}</div>
                     </div>
 

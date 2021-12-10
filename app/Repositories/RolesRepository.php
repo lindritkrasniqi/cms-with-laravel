@@ -28,6 +28,17 @@ class RolesRepository
      */
     public function roles()
     {
-        return $this->roles ?? [];
+        return $this->roles;
+    }
+
+    /**
+     * Get role by unique id
+     *
+     * @param  integer $id
+     * @return \App\Models\Role
+     */
+    public function getRoleById(int $id): Role
+    {
+        return $this->roles->where('id', $id)->first();
     }
 }

@@ -31,7 +31,7 @@ class RoleController extends Controller
 
         $role = Role::create($request->validated());
 
-        return redirect()->route('menage.roles.edit', $role->id)->with(['message' => 'Successfully created new role']);
+        return redirect()->route('menage.roles.edit', $role->id)->with(['message' => __('role.stored', ['role' => $role->role])]);
     }
 
     /**
@@ -73,7 +73,7 @@ class RoleController extends Controller
 
         $role->update($request->validated());
 
-        return redirect()->route('menage.roles')->with(['message' => 'success']);
+        return redirect()->route('menage.roles')->with(['message' => __('role.updated', ['role' => $role->role])]);
     }
 
     /**
@@ -88,6 +88,6 @@ class RoleController extends Controller
 
         $role->delete();
 
-        return back()->with(['message' => 'success']);
+        return back()->with(['message' => __('role.destroyed', ['role' => $role->role])]);
     }
 }

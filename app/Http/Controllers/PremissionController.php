@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Repositories\RolesRepository;
 use App\Http\Requests\PremissionRequest;
 use App\Models\Premission;
 use App\Models\Role;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class PremissionController extends Controller
 {
@@ -21,13 +23,21 @@ class PremissionController extends Controller
 
         if ($role->premissions()->where('policy', $request->policy)->count() != 0) {
             throw ValidationException::withMessages([
-                'policy' => [__('The given policy already is applied on this role!')]
+                'policy' => [__('role.applied', [
+                    'role' => $role->role,
+                    'policy' => Str::snake($request->policy, ' ')
+                ])]
             ]);
         }
 
         $role->premissions()->create($request->validated());
 
-        return redirect()->route('menage.roles.edit', $role->id)->with(['message' => 'Success!']);
+        return back()->with([
+            'message' => __('premission.stored', [
+                'role' => $role->role,
+                'policy' => Str::snake($request->policy, ' ')
+            ])
+        ]);
     }
 
     /**
@@ -47,7 +57,12 @@ class PremissionController extends Controller
 
         $premission->update($data);
 
-        return redirect()->route('menage.roles.edit', $premission->role_id)->with(['message' => 'Success!']);
+        return back()->with([
+            'message' => __('premission.updated', [
+                'role' => RolesRepository::getRoleById($premission->role_id)->role,
+                'policy' => Str::snake($premission->policy, ' ')
+            ])
+        ]);
     }
 
     /**
@@ -60,10 +75,13 @@ class PremissionController extends Controller
     {
         $this->authorize('create', Role::class);
 
-        $role_id = $premission->role_id;
-
         $premission->delete();
 
-        return redirect()->route('menage.roles.edit', $role_id)->with(['message' => 'Success!']);
+        return back()->with([
+            'message' => __('premission.destroyed', [
+                'role' => RolesRepository::getRoleById($premission->role_id)->role,
+                'policy' => Str::snake($premission->policy, ' ')
+            ])
+        ]);
     }
 }

@@ -51,8 +51,8 @@
 
                                 @can('delete', $role)
                                     <a class="dropdown-item text-danger" href="#"
-                                        onclick="event.preventDefault(); return confirm(`Are you sure you want to take this action?`) ? document.getElementById('delete-form').submit(): false;">Delete</a>
-                                    <form id="delete-form" action="{{ route('menage.roles.destroy', $role->id) }}"
+                                        onclick="event.preventDefault(); return confirm(`Are you sure you want to take this action?`) ? document.getElementById('delete-role-{{$role->id}}-form').submit(): false;">Delete</a>
+                                    <form id="delete-role-{{$role->id}}-form" action="{{ route('menage.roles.destroy', $role->id) }}"
                                         method="post">
                                         @csrf
                                         @method('DELETE')
