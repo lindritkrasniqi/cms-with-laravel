@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -75,7 +76,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->ableTo('delete', class_basename($this));
+        return $user->ableTo('delete', class_basename($this)) && $model->id != Role::ADMINISTRATOR;
     }
 
     /**
@@ -99,6 +100,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return $user->ableTo('force_delete', class_basename($this));
+        return $user->ableTo('force_delete', class_basename($this)) && $model->id != Role::ADMINISTRATOR;
     }
 }
