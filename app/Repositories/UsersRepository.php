@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UsersRepository
@@ -79,16 +81,23 @@ class UsersRepository
     /**
      * Lock current authenticated account
      *
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function lockAccount(): void
+    public function lockAccount(Request $request)
     {
-        auth()->user()->delete();
+        if ($request->user()->id != Role::ADMINISTRATOR) {
 
-        auth()->logout();
+            $request->user()->delete();
 
-        request()->session()->invalidate();
+            auth()->logout();
 
-        request()->session()->regenerateToken();
+            request()->session()->invalidate();
+
+            request()->session()->regenerateToken();
+
+            return back();
+        }
+
+        return back()->with(['message' => 'To lock your account you must be a regular user.']);
     }
 }
