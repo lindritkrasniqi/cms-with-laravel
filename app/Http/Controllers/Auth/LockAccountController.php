@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Facades\Repositories\UsersRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class LockAccountController extends Controller
 {
@@ -13,10 +14,8 @@ class LockAccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        UsersRepository::lockAccount();
-
-        return back();
+        return UsersRepository::lockAccount($request);
     }
 }
