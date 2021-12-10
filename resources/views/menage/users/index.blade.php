@@ -248,7 +248,7 @@
 
                     </div> --}}
                     <br>
-                    @empty($users)
+                    @if( count($users) == 0)
                         <div class="lead text-center"> No users yet! </div>
                     @else
                         <div class="table-responsive">
@@ -318,8 +318,8 @@
 
                                                         @can('delete', $user)
                                                             <a class="dropdown-item text-danger" href="#"
-                                                                onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('delete-user-form').submit() : false;">Delete</a>
-                                                            <form id="delete-user-form"
+                                                                onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('delete-user-{{$user->id}}-form').submit() : false;">Delete</a>
+                                                            <form id="delete-user-{{$user->id}}-form"
                                                                 action="{{ route('menage.users.destroy', $user->id) }}"
                                                                 method="post">
                                                                 @csrf
@@ -335,7 +335,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    @endEmpty
+                    @endif
                 </div>
             </div>
         </div>
