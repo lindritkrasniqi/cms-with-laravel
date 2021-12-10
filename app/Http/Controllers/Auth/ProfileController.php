@@ -37,6 +37,6 @@ class ProfileController extends Controller
             'email' => $request->email
         ]);
 
-        return back()->with(['message' => 'You have updated your profile data successfully!']);
+        return back()->with(['message' => __('user.profile')]);
     }
 }

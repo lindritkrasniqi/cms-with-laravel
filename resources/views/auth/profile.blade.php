@@ -16,12 +16,6 @@
                         <h1>{{ __('Profile') }}</h1>
                         <p class="text-medium-emphasis">{{ __('Your personal data') }}</p>
 
-                        @if (session('message'))
-                            <div class="alert alert-success">
-                                {{ session('message') }}
-                            </div>
-                        @endif
-
                         <div class="input-group mb-3"><span class="input-group-text">
                                 <i class="icon fa fa-user"></i></span>
                             <input class="form-control @error('name') is-invalid @enderror" type="text"

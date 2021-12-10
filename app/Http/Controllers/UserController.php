@@ -46,9 +46,9 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        User::create(array_merge($request->validated(), ['password' => bcrypt($request->validated()['password'])]));
+        $user = User::create(array_merge($request->validated(), ['password' => bcrypt($request->validated()['password'])]));
 
-        return back()->with(['message' => 'success']);
+        return back()->with(['message' => __('user.stored', ['name' => $user->name])]);
     }
 
     /**
@@ -102,7 +102,7 @@ class UserController extends Controller
 
         $user->update($request->validated());
 
-        return back()->with(['message' => 'Success']);
+        return back()->with(['message' => __('user.updated', ['name' => $user->name])]);
     }
 
     /**
@@ -121,7 +121,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('menage.users')->with(['message' => 'success']);
+        return redirect()->route('menage.users')->with(['message' => __('user.destroyed', ['name' => $user->name])]);
     }
 
     public function changePassword(Request $request, User $user)
@@ -134,7 +134,7 @@ class UserController extends Controller
 
         $user->update(['password' => bcrypt($request->password)]);
 
-        return redirect()->route('menage.users')->with(['message' => 'Success']);
+        return redirect()->route('menage.users')->with(['message' => __('user.password', ['name' => $user->name])]);
     }
 
     public function trashed()
@@ -152,7 +152,7 @@ class UserController extends Controller
 
         $user->restore();
 
-        return redirect()->route('menage.users.trashed')->with(['message' => 'success']);
+        return redirect()->route('menage.users.trashed')->with(['message' => __('user.restored', ['name' => $user->name])]);
     }
 
     public function delete(User $user)
@@ -161,6 +161,6 @@ class UserController extends Controller
 
         $user->forceDelete();
 
-        return redirect()->route('menage.users.trashed')->with(['message' => 'success']);
+        return redirect()->route('menage.users.trashed')->with(['message' => __('user.deleted', ['name' => $user->name])]);
     }
 }

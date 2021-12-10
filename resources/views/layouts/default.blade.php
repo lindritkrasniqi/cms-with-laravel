@@ -25,6 +25,8 @@
 <body>
     @yield('content')
 
+    <x-notification.toast></x-notification.toast>
+
     <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@4.1.0/dist/js/coreui.bundle.min.js" crossorigin="anonymous">
     </script>
 </body>

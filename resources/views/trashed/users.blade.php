@@ -56,7 +56,8 @@
                                                 <i class="icon fa fa-credit-card-alt"></i>
                                             </td>
                                             <td>
-                                                <div class="small text-medium-emphasis"><span class="text-danger">Closed</span></div>
+                                                <div class="small text-medium-emphasis"><span
+                                                        class="text-danger">Closed</span></div>
                                                 <div class="fw-semibold">{{ $user->deleted_at->diffForHumans() }}</div>
                                             </td>
                                             <td>
@@ -69,8 +70,8 @@
                                                     <div class="dropdown-menu dropdown-menu-end" style="">
                                                         @can('restore', $user)
                                                             <a class="dropdown-item" href="#"
-                                                                onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('restore-user-form').submit() : false;">Restore</a>
-                                                            <form id="restore-user-form"
+                                                                onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('restore-user-{{ $user->id }}-form').submit() : false;">Restore</a>
+                                                            <form id="restore-user-{{ $user->id }}-form"
                                                                 action="{{ route('menage.users.restore', $user->id) }}"
                                                                 method="post">
                                                                 @csrf
@@ -80,9 +81,9 @@
 
                                                         @can('forceDelete', $user)
                                                             <a class="dropdown-item text-danger" href="#"
-                                                                onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('delete-user-form').submit() : false;">Delete
+                                                                onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('delete-user-{{ $user->id }}-form').submit() : false;">Delete
                                                                 permanently</a>
-                                                            <form id="delete-user-form"
+                                                            <form id="delete-user-{{ $user->id }}-form"
                                                                 action="{{ route('menage.users.delete', $user->id) }}"
                                                                 method="post">
                                                                 @csrf
