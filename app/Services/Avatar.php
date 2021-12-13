@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -24,6 +25,34 @@ class Avatar
     private $directory = 'avatars';
 
     /**
+     * User model.
+     *
+     * @var \App\Models\User
+     */
+    private $user;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->user = request()->user();
+    }
+
+    /**
+     * Set the user and return self
+     *
+     * @param \App\Models\User $user
+     * @return self
+     */
+    public function of(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
      * 1. Unlink previous avatar from disk.
      * 2. Update the avatar record on database.
      * 3. Store new avatar into disk.
@@ -33,7 +62,7 @@ class Avatar
      */
     public function update(UploadedFile $file): void
     {
-        $avatar = request()->user()->avatar;
+        $avatar = $this->user->avatar;
 
         $this->delete($avatar->name . '.' . $avatar->extension);
 
@@ -50,7 +79,7 @@ class Avatar
      */
     public function store(UploadedFile $file): void
     {
-        $avatar = request()->user()->avatar()->create($this->image($file));
+        $avatar = $this->user->avatar()->create($this->image($file));
 
         $this->saveAs($file, $avatar->name . '.' . $avatar->extension);
     }
@@ -62,7 +91,7 @@ class Avatar
      */
     public function destroy(): void
     {
-        $avatar = request()->user()->avatar;
+        $avatar = $this->user->avatar;
 
         $this->delete($avatar->name . '.' . $avatar->extension);
 
@@ -75,7 +104,7 @@ class Avatar
      * @param  string $avatar
      * @return void
      */
-    public function delete(string $avatar): void
+    private function delete(string $avatar): void
     {
         Storage::disk($this->disk)->delete($this->directory . '/' . $avatar);
     }
