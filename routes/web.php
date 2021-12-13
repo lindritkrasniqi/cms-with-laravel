@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LockAccountController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\PremissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -45,6 +46,9 @@ Route::group(['middleware' => ['auth']], function () {
          */
         Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/avatar', [AvatarController::class, 'store'])->name('avatar.store');
+        Route::put('/avatar', [AvatarController::class, 'update'])->name('avatar.update');
+        Route::delete('/avatar', [AvatarController::class, 'destroy'])->name('avatar.destroy');
 
         /**
          * Settings endpoints

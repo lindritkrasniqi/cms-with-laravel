@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Facades\Services\Policies;
-use Illuminate\Auth\Events\Registered;
+use App\Notifications\ResetPassword;
+use App\Notifications\VerifyEmail;
+use App\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -54,6 +56,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class);
     }
 
+    public function avatar()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
     /**
      * Check if the current user are able to take any action upon given policy
      *
@@ -68,5 +75,26 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return false;
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }
