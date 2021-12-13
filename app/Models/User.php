@@ -56,6 +56,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class);
     }
 
+    public function avatar()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
     /**
      * Check if the current user are able to take any action upon given policy
      *

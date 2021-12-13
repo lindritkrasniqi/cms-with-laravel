@@ -15,4 +15,9 @@ return [
     'deleted' => 'Account of <b>:Name</b> has been deleted permanently!',
     'password' => 'The password account of <b>:Name</b> has been updated.',
     'profile' => 'The profile has been updated.',
+    'avatar' => [
+        'stored' => 'Profile image has been stored.',
+        'updated' => 'Profile image has been updated.',
+        'destroyed' => 'Profile image has been removed.',
+    ],
 ];
