@@ -31,9 +31,8 @@
         <ul class="header-nav ms-3">
             <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button"
                     aria-haspopup="true" aria-expanded="false">
-                    <div class="avatar avatar-md">
-                        <img class="avatar-img" src="https://i.pravatar.cc/150?u={{ auth()->id() }}"
-                            alt="{{ auth()->user()->name }}">
+                    <div class="avatar avatar-md bg-secondary">
+                        <x-avatar></x-avatar>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
