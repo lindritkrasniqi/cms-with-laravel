@@ -9,16 +9,16 @@ class Policies
     /**
      * Policies directory
      *
-     * @var [string]
+     * @var string
      */
-    private $directory;
+    private $directory = __DIR__ . '/../Policies';
 
     /**
      * Policies
      *
      * @var array
      */
-    private $policies;
+    private $policies = [];
 
     /**
      * Premissions
@@ -32,10 +32,8 @@ class Policies
      */
     public function __construct()
     {
-        $this->directory = __DIR__ . '/../Policies';
-        $this->policies = [];
-
         $this->setPolicies();
+        
         $this->premissions();
     }
 
