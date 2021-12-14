@@ -17,6 +17,15 @@ class User extends Authenticatable implements MustVerifyEmail
     use  HasFactory, Notifiable, SoftDeletes;
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+        'avatar',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string[]
@@ -47,15 +56,30 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Dispatches Events.
+     *
+     * @var array
+     */
     protected $dispatchesEvents = [
         'created' => Registered::class
     ];
 
+    /**
+     * Role relationship.
+     *
+     * @return Illuminate\Database\Eloquent\Concerns\HasRelationships::belongsTo
+     */
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
+    /**
+     * Avatar relationship.
+     *
+     * @return Illuminate\Database\Eloquent\Concerns\HasRelationships::morphOne
+     */
     public function avatar()
     {
         return $this->morphOne(Image::class, 'imageable');
