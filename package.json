@@ -23,5 +23,8 @@
         "vue": "^3.2.21",
         "vue-loader": "^16.8.2",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "@coreui/coreui": "^4.1.0"
     }
 }
