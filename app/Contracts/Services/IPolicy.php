@@ -6,7 +6,7 @@ use App\Models\Premission;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
-interface IPolicies
+interface IPolicy
 {
     /**
      * Get all created policies.

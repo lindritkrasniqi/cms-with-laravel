@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Contracts\Services\IAvatar;
-use App\Contracts\Services\IPolicies;
+use App\Contracts\Services\IPolicy;
 use App\Services\Avatar;
-use App\Services\Policies;
+use App\Services\Policy;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      * @var array
      */
     private $facades = [
-        IPolicies::class => Policies::class,
+        IPolicy::class => Policy::class,
         IAvatar::class => Avatar::class,
     ];
 

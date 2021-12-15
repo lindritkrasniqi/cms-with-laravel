@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Facades\Services\Policies;
+use App\Facades\Services\Policy;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use App\Events\Registered;
@@ -94,8 +94,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function ableTo(string $action, string $policy): bool
     {
-        if (Policies::exists($policy) && Policies::hasRightOn($policy)) {
-            return Policies::policy($policy)->{$action};
+        if (Policy::exists($policy) && Policy::hasRightOn($policy)) {
+            return Policy::policy($policy)->{$action};
         }
 
         return false;

@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Facades\Services\Policies;
+use App\Facades\Services\Policy;
 use Illuminate\Contracts\Validation\Rule;
 
 class PolicyRule implements Rule
@@ -26,7 +26,7 @@ class PolicyRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Policies::exists($value);
+        return Policy::exists($value);
     }
 
     /**
