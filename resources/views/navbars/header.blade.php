@@ -1,9 +1,10 @@
 <header class="header header-sticky mb-4">
     <div class="container-fluid">
-        <a class="header-brand d-md-none" href="#">
-            <svg width="118" height="46" alt="CoreUI Logo">
-                <use xlink:href="assets/brand/coreui.svg#full"></use>
-            </svg>
+        
+        <sidebar-toggle-button></sidebar-toggle-button>
+
+        <a class="header-brand d-md-none" href="{{ route('home') }}">
+            <i class="fa fa-chrome"></i>
         </a>
 
         <ul class="header-nav d-none d-md-flex">

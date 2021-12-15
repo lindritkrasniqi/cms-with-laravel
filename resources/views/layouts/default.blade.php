@@ -13,22 +13,16 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-
     <!-- Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@4.1.0/dist/css/coreui.min.css" rel="stylesheet"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
 <body>
-    @yield('content')
+    <div id="app">
+        @yield('content')
+    </div>
 
     <x-notification.toast></x-notification.toast>
-
-    <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@4.1.0/dist/js/coreui.bundle.min.js" crossorigin="anonymous">
-    </script>
 </body>
 
 </html>

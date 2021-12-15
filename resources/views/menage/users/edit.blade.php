@@ -19,8 +19,9 @@
                         <p class="text-medium-emphasis">{{ __('Update profile') }}</p>
 
                         <div class="d-flex justify-content-center align-items-center mb-4">
-                            <img class="rounded-circle" src="https://i.pravatar.cc/150?u={{ $user->id }}"
-                                alt="{{ $user->email }}">
+                            <div class="avatar border" style="width:200px; height:200px;">
+                                <x-avatar :user="$user" width="200"></x-avatar>
+                            </div>
                         </div>
 
                         <div class="input-group mb-3"><span class="input-group-text">

@@ -7,7 +7,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-
 class Avatar
 {
     /**
@@ -62,13 +61,11 @@ class Avatar
      */
     public function update(UploadedFile $file): void
     {
-        $avatar = $this->user->avatar;
+        $this->delete($this->getAvatarFileName());
 
-        $this->delete($avatar->name . '.' . $avatar->extension);
+        $this->user->avatar->update($this->image($file));
 
-        $avatar->update($this->image($file));
-
-        $this->saveAs($file, $avatar->name . '.' . $avatar->extension);
+        $this->saveAs($file, $this->getAvatarFileName());
     }
 
     /**
@@ -79,9 +76,9 @@ class Avatar
      */
     public function store(UploadedFile $file): void
     {
-        $avatar = $this->user->avatar()->create($this->image($file));
+        $this->user->avatar = $this->user->avatar()->create($this->image($file));
 
-        $this->saveAs($file, $avatar->name . '.' . $avatar->extension);
+        $this->saveAs($file, $this->getAvatarFileName());
     }
 
     /**
@@ -91,11 +88,9 @@ class Avatar
      */
     public function destroy(): void
     {
-        $avatar = $this->user->avatar;
+        $this->delete($this->getAvatarFileName());
 
-        $this->delete($avatar->name . '.' . $avatar->extension);
-
-        $avatar->delete();
+        $this->user->avatar->delete();
     }
 
     /**
@@ -150,5 +145,15 @@ class Avatar
             'extension' => $file->getClientOriginalExtension(),
             'size' => $file->getSize()
         ];
+    }
+
+    /**
+     * Get avatar file name.
+     *
+     * @return string
+     */
+    private function getAvatarFileName(): string
+    {
+        return $this->user->avatar->name . '.' . $this->user->avatar->extension;
     }
 }
