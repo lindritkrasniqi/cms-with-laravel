@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\Services\IAvatar;
+use App\Contracts\Services\IPolicies;
 use App\Services\Avatar;
 use App\Services\Policies;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +13,14 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Registered Facedes to be binded into container.
+     * 
+     * Contract => Class
      *
      * @var array
      */
     private $facades = [
-        'policies' => Policies::class,
-        'avatar' => Avatar::class,
+        IPolicies::class => Policies::class,
+        IAvatar::class => Avatar::class,
     ];
 
     /**
