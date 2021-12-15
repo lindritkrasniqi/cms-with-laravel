@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Contracts\Services\IAvatar;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-class Avatar
+class Avatar implements IAvatar
 {
     /**
      * Avatar disk space.
