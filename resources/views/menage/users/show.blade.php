@@ -13,8 +13,9 @@
                     <h3 class="text-center mb-4">{{ __('Personal informations') }}</h3>
 
                     <div class="d-flex justify-content-center align-items-center mb-4">
-                        <img class="rounded-circle" src="https://i.pravatar.cc/150?u={{ $user->id }}"
-                            alt="{{ $user->email }}">
+                        <div class="avatar border" style="width:200px; height:200px;">
+                            <x-avatar :user="$user" width="200"></x-avatar>
+                        </div>
                     </div>
 
                     <div class="row mt-2">
@@ -42,8 +43,7 @@
                             <a href="#"
                                 onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('delete-user-form').submit() : false;"
                                 class="btn btn-outline-danger">Delete</a>
-                            <form id="delete-user-form" action="{{ route('menage.users.destroy', $user->id) }}"
-                                method="post">
+                            <form id="delete-user-form" action="{{ route('menage.users.destroy', $user->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                             </form>
