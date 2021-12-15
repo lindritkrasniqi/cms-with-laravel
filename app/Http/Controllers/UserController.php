@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Repositories\UsersRepository;
+use App\Facades\Repositories\Users;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = UsersRepository::all();
+        $users = Users::all();
 
         return view('menage.users.index', compact('users'));
     }
@@ -141,7 +141,7 @@ class UserController extends Controller
     {
         $this->authorize('viewTrashed', User::class);
 
-        $users = UsersRepository::trashed();
+        $users = Users::trashed();
 
         return view('trashed.users', compact('users'));
     }

@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Role;
 
-class RolesRepository
+class Roles
 {
     /**
      * Undocumented variable
