@@ -2,9 +2,13 @@
 
 namespace App\Services;
 
+use App\Contracts\Services\IPolicies;
+use App\Models\Premission;
+use App\Models\User;
+use Illuminate\Support\Collection;
 use \Illuminate\Support\Str;
 
-class Policies
+class Policies implements IPolicies
 {
     /**
      * Policies directory
@@ -23,9 +27,16 @@ class Policies
     /**
      * Premissions
      *
-     * @var \App\Models\Premission
+     * @var \Illuminate\Support\Collection
      */
     private $premissions;
+
+    /**
+     * User
+     *
+     * @var \App\Models\User
+     */
+    private $user;
 
     /**
      * Constructor
@@ -33,8 +44,8 @@ class Policies
     public function __construct()
     {
         $this->setPolicies();
-        
-        $this->premissions();
+
+        $this->setUser();
     }
 
     /**
@@ -64,6 +75,19 @@ class Policies
     }
 
     /**
+     * Set $user and $premissions properties.
+     *
+     * @param  \App\Models\User|null $user
+     * @return void
+     */
+    private function setUser(User $user = null): void
+    {
+        $this->user = $user ?? request()->user();
+
+        $this->premissions = $this->user->role->premissions;
+    }
+
+    /**
      * Get all policies
      *
      * @return array
@@ -89,34 +113,34 @@ class Policies
     }
 
     /**
-     * Fetch all premissions of role from authenticated user.
+     * Set the user.
      *
-     * @return void
+     * @return self
      */
-    private function premissions()
+    public function of(User $user): self
     {
-        if (auth()->check()) {
-            $this->premissions = auth()->user()->role->premissions;
-        }
+        $this->setUser($user);
+
+        return $this;
     }
 
     /**
      * Return premissions
      *
-     * @return \App\Models\Premission
+     * @return \Illuminate\Support\Collection
      */
-    public function getPremissions()
+    public function getPremissions(): Collection
     {
         return $this->premissions;
     }
 
     /**
-     * Return a unique policy.
+     * Return premissions of the given policy.
      *
      * @param  string $policy
      * @return \App\Models\Premission
      */
-    public function policy(string $policy)
+    public function policy(string $policy): Premission
     {
         return $this->premissions->where('policy', $policy)->first();
     }
