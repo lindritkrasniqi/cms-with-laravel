@@ -4,7 +4,7 @@ namespace App\Facades\Repositories;
 
 use Illuminate\Support\Facades\Facade;
 
-class UsersRepository extends Facade
+class Users extends Facade
 {
     public static function getFacadeAccessor()
     {

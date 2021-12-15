@@ -2,7 +2,7 @@
 
 namespace App\Facades\Services;
 
-use App\Contracts\Services\IPolicies;
+use App\Contracts\Services\IPolicy;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static \App\Models\Premission policy(string $policy)
  * @method static \Illuminate\Support\Collection getPremissions()
  * 
- * @source App\Contracts\Services\IPolicies - Policies Contract.
+ * @source App\Contracts\Services\IPolicy - Policy Contract.
  */
-class Policies extends Facade
+class Policy extends Facade
 {
     public static function getFacadeAccessor()
     {
-        return IPolicies::class;
+        return IPolicy::class;
     }
 }

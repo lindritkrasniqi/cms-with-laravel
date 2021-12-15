@@ -4,7 +4,7 @@ namespace App\Facades\Repositories;
 
 use Illuminate\Support\Facades\Facade;
 
-class RolesRepository extends Facade
+class Roles extends Facade
 {
     public static function getFacadeAccessor()
     {

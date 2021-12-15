@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Contracts\Services\IPolicies;
+use App\Contracts\Services\IPolicy;
 use App\Models\Premission;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use \Illuminate\Support\Str;
 
-class Policies implements IPolicies
+class Policy implements IPolicy
 {
     /**
      * Policies directory

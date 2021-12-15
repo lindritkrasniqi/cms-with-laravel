@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repositories\RolesRepository;
-use App\Repositories\UsersRepository;
+use App\Repositories\Roles;
+use App\Repositories\Users;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoriesServiceProvider extends ServiceProvider
@@ -15,8 +15,8 @@ class RepositoriesServiceProvider extends ServiceProvider
      * @var array
      */
     private $repositories = [
-        'users' => UsersRepository::class,
-        'roles' => RolesRepository::class,
+        'users' => Users::class,
+        'roles' => Roles::class,
     ];
 
     /**
