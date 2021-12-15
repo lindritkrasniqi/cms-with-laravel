@@ -8,6 +8,17 @@ use Illuminate\Support\ServiceProvider;
 
 class RepositoriesServiceProvider extends ServiceProvider
 {
+
+    /**
+     * Register all repositories to bind into controller.
+     *
+     * @var array
+     */
+    private $repositories = [
+        'users' => UsersRepository::class,
+        'roles' => RolesRepository::class,
+    ];
+
     /**
      * Register services.
      *
@@ -15,13 +26,7 @@ class RepositoriesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('users', function () {
-            return new UsersRepository();
-        });
-
-        $this->app->singleton('roles', function () {
-            return new RolesRepository();
-        });
+        $this->bindRepositories();
     }
 
     /**
@@ -32,5 +37,17 @@ class RepositoriesServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+    /**
+     * Bind each instance to container.
+     *
+     * @return void
+     */
+    private function bindRepositories(): void
+    {
+        foreach ($this->repositories as $key => $value) {
+            $this->app->singleton($key, $value);
+        }
     }
 }

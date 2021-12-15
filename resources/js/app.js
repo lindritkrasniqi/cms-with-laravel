@@ -7,6 +7,7 @@
 require("./bootstrap");
 
 import { createApp } from "vue";
+import '@coreui/coreui';
 
 const app = createApp({});
 
@@ -22,6 +23,7 @@ const app = createApp({});
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 app.component("example-component", require("./components/ExampleComponent.vue").default);
+app.component("sidebar-toggle-button", require("./components/Sidebar/ToggleButton.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
