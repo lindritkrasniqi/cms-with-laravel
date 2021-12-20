@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Repositories\RolesRepository;
+use App\Facades\Repositories\Roles;
 use App\Http\Requests\PremissionRequest;
 use App\Models\Premission;
 use App\Models\Role;
@@ -59,7 +59,7 @@ class PremissionController extends Controller
 
         return back()->with([
             'message' => __('premission.updated', [
-                'role' => RolesRepository::getRoleById($premission->role_id)->role,
+                'role' => Roles::getRoleById($premission->role_id)->role,
                 'policy' => Str::snake($premission->policy, ' ')
             ])
         ]);
@@ -79,7 +79,7 @@ class PremissionController extends Controller
 
         return back()->with([
             'message' => __('premission.destroyed', [
-                'role' => RolesRepository::getRoleById($premission->role_id)->role,
+                'role' => Roles::getRoleById($premission->role_id)->role,
                 'policy' => Str::snake($premission->policy, ' ')
             ])
         ]);
