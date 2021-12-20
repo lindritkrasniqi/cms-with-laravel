@@ -41,6 +41,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => 'verified'], function () {
         Route::view('/home', 'home')->name('home');
 
+        Route::view('/media', 'storage.index')->name('storage');
+        Route::view('/media/import', 'storage.import')->name('storage.import');
+
         /**
          * Profile endpoints
          */
