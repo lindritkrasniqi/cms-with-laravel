@@ -6,6 +6,7 @@ use App\Facades\Services\Policy;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use App\Events\Registered;
+use App\Events\UserDeleted;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -62,7 +63,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $dispatchesEvents = [
-        'created' => Registered::class
+        'created' => Registered::class,
+        'deleted' => UserDeleted::class
     ];
 
     /**
