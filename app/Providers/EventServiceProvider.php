@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\Registered;
+use App\Events\UserDeleted;
+use App\Listeners\DeleteAvatarFile;
 use App\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -18,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        UserDeleted::class => [
+            DeleteAvatarFile::class,
+        ]
     ];
 
     /**
