@@ -29,13 +29,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
-
                                         <tr class="align-middle">
                                             <td class="text-center">
                                                 <div class="avatar avatar-md">
-                                                    <img class="avatar-img"
-                                                        src="https://i.pravatar.cc/150?u={{ $user->id }}"
-                                                        alt="{{ $user->email }}">
+                                                    <x-avatar :user="$user"></x-avatar>
                                                     <span class="avatar-status bg-danger"></span>
                                                 </div>
                                             </td>
