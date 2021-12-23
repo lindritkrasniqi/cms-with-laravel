@@ -7,24 +7,24 @@ use App\Models\Role;
 class Roles
 {
     /**
-     * Undocumented variable
+     * Collection of roles.
      *
-     * @var [type]
+     * @var \Illuminate\Support\Collection
      */
     private $roles;
 
     /**
-     * Undocumented function
+     * Constructor
      */
     public function __construct()
     {
-        $this->roles = Role::withCount('users')->get();
+        $this->roles = Role::withCount('users')->oldest('role')->get();
     }
 
     /**
      * Return all roles with premissions
      *
-     * @return $roles
+     * @return \App\Models\Role [] 
      */
     public function roles()
     {
