@@ -248,7 +248,7 @@
 
                     </div> --}}
                     <br>
-                    @if( count($users) == 0)
+                    @if (count($users) == 0)
                         <div class="lead text-center"> No users yet! </div>
                     @else
                         <div class="table-responsive">
@@ -286,7 +286,8 @@
                                                 <span class="fw-lighter" title="Kosovo">XK</span>
                                             </td>
                                             <td>
-                                                <span class="fw-lighter" title="{{ $user->email }}">{{ $user->email }}</span>
+                                                <span class="fw-lighter"
+                                                    title="{{ $user->email }}">{{ $user->email }}</span>
                                             </td>
                                             <td class="text-center">
                                                 <i class="icon fa fa-credit-card"></i>
@@ -297,35 +298,37 @@
                                                 <div class="fw-semibold">{{ $user->updated_at->diffForHumans() }}</div>
                                             </td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-transparent p-0" type="button"
-                                                        data-coreui-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="icon fa fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end" style="">
-                                                        @can('view', $user)
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('menage.users.show', [$user->id]) }}">Info</a>
-                                                        @endcan
+                                                @canany(['view', 'update', 'delete'], $user)
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-transparent p-0" type="button"
+                                                            data-coreui-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <i class="icon fa fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end" style="">
+                                                            @can('view', $user)
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('menage.users.show', [$user->id]) }}">Info</a>
+                                                            @endcan
 
-                                                        @can('update', $user)
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('menage.users.edit', [$user->id]) }}">Edit</a>
-                                                        @endcan
+                                                            @can('update', $user)
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('menage.users.edit', [$user->id]) }}">Edit</a>
+                                                            @endcan
 
-                                                        @can('delete', $user)
-                                                            <a class="dropdown-item text-danger" href="#"
-                                                                onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('delete-user-{{$user->id}}-form').submit() : false;">Delete</a>
-                                                            <form id="delete-user-{{$user->id}}-form"
-                                                                action="{{ route('menage.users.destroy', $user->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                            </form>
-                                                        @endcan
+                                                            @can('delete', $user)
+                                                                <a class="dropdown-item text-danger" href="#"
+                                                                    onclick="event.preventDefault(); return confirm('Are you sure you want to take this action?') ? document.getElementById('delete-user-{{ $user->id }}-form').submit() : false;">Delete</a>
+                                                                <form id="delete-user-{{ $user->id }}-form"
+                                                                    action="{{ route('menage.users.destroy', $user->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                </form>
+                                                            @endcan
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endcanany
                                             </td>
                                         </tr>
 

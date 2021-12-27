@@ -34,9 +34,7 @@
                                         <tr class="align-middle">
                                             <td class="text-center">
                                                 <div class="avatar avatar-md">
-                                                    <img class="avatar-img"
-                                                        src="https://i.pravatar.cc/150?u={{ $user->id }}"
-                                                        alt="{{ $user->email }}">
+                                                    <x-avatar :user="$user"></x-avatar>
                                                 </div>
                                             </td>
                                             <td>
@@ -59,26 +57,28 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-transparent p-0" type="button"
-                                                        data-coreui-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="icon fa fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end" style="">
-                                                        @can('view', $user)
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('menage.users.show', $user->id) }}">Info</a>
-                                                        @endcan
+                                                @canany(['view', 'update'], $user)
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-transparent p-0" type="button"
+                                                            data-coreui-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <i class="icon fa fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end" style="">
+                                                            @can('view', $user)
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('menage.users.show', $user->id) }}">Info</a>
+                                                            @endcan
 
-                                                        @can('update', $user)
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('menage.users.edit', $user->id) }}">
-                                                                Change permission
-                                                            </a>
-                                                        @endcan
+                                                            @can('update', $user)
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('menage.users.edit', $user->id) }}">
+                                                                    Change permission
+                                                                </a>
+                                                            @endcan
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endcanany
                                             </td>
                                         </tr>
                                     @endforeach

@@ -17,9 +17,9 @@
                     <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden;">
                         <div class="simplebar-content" style="padding: 0px;">
                             <li class="nav-item">
-                                <a @class(['nav-link', 'active' => Route::is('home')]) href="{{ route('home') }}">
-                                    <i class="fa fa-dashboard nav-icon"></i> Dashboard<span
-                                        class="badge badge-sm bg-info ms-auto">NEW</span>
+                                <a class="nav-link" href="{{ route('home') }}">
+                                    <i class="fa fa-dashboard nav-icon"></i> Dashboard
+                                    <span class="badge badge-sm bg-info ms-auto">NEW</span>
                                 </a>
                             </li>
 
@@ -40,74 +40,83 @@
                                 </a>
                             </li>
 
-                            <li class="nav-title">Theme</li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="colors.html">
-                                    <i class="nav-icon fa fa-eyedropper"></i> Colors
+                            <li class="nav-title">Storage</li>
+                            <li class="nav-group" aria-expanded="true">
+                                <a class="nav-link nav-group-toggle">
+                                    <i class="nav-icon fa fa-cloud"></i> Storage
+                                    <span class="badge badge-sm bg-info ms-auto">NEW</span>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="typography.html">
-                                    <i class="nav-icon fa fa-pencil"></i> Typography
-                                </a>
+                                <ul class="nav-group-items">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('storage') }}">
+                                            <i class="nav-icon fa fa-file-picture-o"></i> View all files
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('storage.import') }}">
+                                            <i class="nav-icon fa fa-plus"></i> Add new file
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
-                            <li class="nav-title">Menage</li>
+                            @cananyof(['viewAny', 'viewTrashed', 'create'], [\App\Models\User::class,\App\Models\Role::class])
+                                <li class="nav-title">Menage</li>
+                            @endcananyof
 
-                            @can('viewAny', \App\Models\User::class)
+                            @canany(['viewAny', 'viewTrashed', 'create'], \App\Models\User::class)
                                 <li class="nav-group" aria-expanded="true">
                                     <a class="nav-link nav-group-toggle" href="#">
                                         <i class="nav-icon fa fa-users"></i> Users
                                     </a>
-                                    <ul class="nav-group-items" style="height: 0px;">
-
+                                    <ul class="nav-group-items">
                                         @can('create', \App\Models\User::class)
                                             <li class="nav-item">
-                                                <a @class([
-                                                    'nav-link',
-                                                    'active' => Route::is('menage.users.create'),
-                                                ]) href="{{ route('menage.users.create') }}">
+                                                <a class="nav-link" href="{{ route('menage.users.create') }}">
                                                     <i class="nav-icon fa fa-plus"></i> Create
                                                 </a>
                                             </li>
                                         @endcan
 
-                                        <li class="nav-item">
-                                            <a @class([
-                                                'nav-link',
-                                                'active' => Route::is('menage.users'),
-                                            ]) href="{{ route('menage.users') }}">
-                                                <i class="nav-icon fa fa-reorder"></i> Show
-                                            </a>
-                                        </li>
+                                        @can('viewAny', \App\Models\User::class)
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('menage.users') }}">
+                                                    <i class="nav-icon fa fa-reorder"></i> Show
+                                                </a>
+                                            </li>
+                                        @endcan
 
                                         @can('viewTrashed', \App\Models\User::class)
                                             <li class="nav-item">
-                                                <a @class([
-                                                    'nav-link',
-                                                    'active' => Route::is('menage.users.trashed'),
-                                                ]) href="{{ route('menage.users.trashed') }}">
+                                                <a class="nav-link" href="{{ route('menage.users.trashed') }}">
                                                     <i class="nav-icon fa fa-lock"></i> Closed accounts
                                                 </a>
                                             </li>
                                         @endcan
                                     </ul>
                                 </li>
-                            @endcan
-
+                            @endcanany
 
                             @can('viewAny', \App\Models\Role::class)
                                 <li class="nav-item">
-                                    <a @class([
-                                        'nav-link',
-                                        'active' => Route::is('menage.roles'),
-                                    ]) href="{{ route('menage.roles') }}">
+                                    <a class="nav-link" href="{{ route('menage.roles') }}">
                                         <i class="nav-icon fa fa-shield"></i> Roles
                                     </a>
                                 </li>
                             @endcan
-
                         </div>
+
+                        <li class="nav-title">Theme</li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="colors.html">
+                                <i class="nav-icon fa fa-eyedropper"></i> Colors
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="typography.html">
+                                <i class="nav-icon fa fa-pencil"></i> Typography
+                            </a>
+                        </li>
                     </div>
                 </div>
             </div>

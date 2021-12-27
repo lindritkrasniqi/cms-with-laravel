@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Facades\Repositories\UsersRepository;
+use App\Facades\Repositories\Users;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -68,7 +65,7 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        UsersRepository::unlockAccountWhenIsLocked($this->username(), $this->credentials($request));
+        Users::unlockAccountWhenIsLocked($this->username(), $this->credentials($request));
 
         if ($this->attemptLogin($request)) {
             return $this->sendLoginResponse($request);

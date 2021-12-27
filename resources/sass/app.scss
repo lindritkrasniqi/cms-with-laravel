@@ -16,3 +16,7 @@
 html:not([dir="rtl"]) .wrapper {
     padding-left: var(--cui-sidebar-occupy-start, 0);
 }
+
+.pointer {
+    cursor: pointer !important;
+}
